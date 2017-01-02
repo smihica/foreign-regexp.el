@@ -576,7 +576,31 @@
   (require 'easymenu))
 (require 're-builder)
 
-
+;;; ===========================================================================
+;;;
+;;;  Variables and Functions for managing "Foreign-Regexp Types".
+;;;
+;;; ===========================================================================
+
+(defcustom foreign-regexp/regexp-type nil
+  "\"Type of the foreign regular expression\" that you want to use."
+  :type    'foreign-regexp/regexp-type/custom-widget/regexp-type-selector
+  :group   'foreign-regexp
+  :set     '(lambda (sym val)
+              (cond
+               ((fboundp 'foreign-regexp/regexp-type/set)
+                (foreign-regexp/regexp-type/set val))
+               (t
+                ;; When this file is being loaded,
+                ;; `foreign-regexp/regexp-type/set' will be called
+                ;; from `Main' section by timer.
+                (setq foreign-regexp/regexp-type val)))))
+
+(defvar foreign-regexp/regexp-type/.type-alst nil
+  ;; FIXME: Write document.
+  "Private variable.")
+
+
 ;;; ===========================================================================
 ;;;
 ;;;  For Debugging.
@@ -3855,7 +3879,7 @@ to each search option changed hook."
 ;;       *RE-Builder* buffer. So here we made a patch which corrects
 ;;       that behavior.
 
-(defvar foreign-regexp/re-builder/targ-buf-state/.orig-pt)
+(defvar foreign-regexp/re-builder/targ-buf-state/.orig-pt 0)
 
 
 ;; ----------------------------------------------------------------------------
@@ -4374,32 +4398,6 @@ as the value of a tag."
 ;; ----------------------------------------------------------------------------
 
 (foreign-regexp/transition/setup)
-
-
-;;; ===========================================================================
-;;;
-;;;  Variables and Functions for managing "Foreign-Regexp Types".
-;;;
-;;; ===========================================================================
-
-(defcustom foreign-regexp/regexp-type nil
-  "\"Type of the foreign regular expression\" that you want to use."
-  :type    'foreign-regexp/regexp-type/custom-widget/regexp-type-selector
-  :group   'foreign-regexp
-  :set     '(lambda (sym val)
-              (cond
-               ((fboundp 'foreign-regexp/regexp-type/set)
-                (foreign-regexp/regexp-type/set val))
-               (t
-                ;; When this file is being loaded,
-                ;; `foreign-regexp/regexp-type/set' will be called
-                ;; from `Main' section by timer.
-                (setq foreign-regexp/regexp-type val)))))
-
-(defvar foreign-regexp/regexp-type/.type-alst nil
-  ;; FIXME: Write document.
-  "Private variable.")
-
 
 ;; ----------------------------------------------------------------------------
 ;;
