@@ -7,7 +7,7 @@
 ;; Keywords: convenience emulations matching tools unix wp
 ;; Revision: $Id$
 ;; Version: 2.0.0
-;; URL: 
+;; URL:
 ;; GitHub: http://github.com/k-talo/foreign-regexp.el
 
 ;; This file is not part of GNU Emacs.
@@ -61,11 +61,11 @@
 ;;
 ;;   1. Make a search/replace operation with foreign regexp
 ;;      through the user-interface of Emacs.
-;;  
+;;
 ;;   2. A search/replace operation will be executed by external
 ;;      commands (they are implemented in Perl, Ruby, JavaScript
 ;;      or Python).
-;;  
+;;
 ;;   3. Apply the result of search/replace operations to the buffer
 ;;      through the user-interface of Emacs.
 ;;
@@ -116,7 +116,7 @@
 ;;
 ;; [Example-1] Query Replace in manner of Perl.
 ;;
-;;   STEP-1: Set `foreign-regexp/regexp-type' to Perl. 
+;;   STEP-1: Set `foreign-regexp/regexp-type' to Perl.
 ;;
 ;;        `M-x foreign-regexp/regexp-type/set <RET> perl <RET>'
 ;;
@@ -126,7 +126,7 @@
 ;;              See "COMMANDS (1) SETTING REGEXP-TYPE" section in
 ;;              this document.
 ;;
-;;   STEP-2: Run query replace 
+;;   STEP-2: Run query replace
 ;;
 ;;        `M-s M-% (\d+)---(\d+) <RET> ${1}456${2} <RET>'
 ;;
@@ -147,7 +147,7 @@
 ;;
 ;;        `M-x foreign-regexp/regexp-type/set <RET> ruby <RET>'
 ;;
-;;   STEP-2: Run query replace 
+;;   STEP-2: Run query replace
 ;;
 ;;        `M-s M-% (\d+)---(\d+) <RET> #{$1}456#{$2} <RET>'
 ;;
@@ -170,7 +170,7 @@
 ;;
 ;;        `M-x foreign-regexp/regexp-type/set <RET> javascript <RET>'
 ;;
-;;   STEP-2: Run query replace 
+;;   STEP-2: Run query replace
 ;;
 ;;        `M-s M-% (\d+)---(\d+) <RET> $1456$2 <RET>'
 ;;
@@ -192,7 +192,7 @@
 ;;
 ;;        `M-x foreign-regexp/regexp-type/set <RET> python <RET>'
 ;;
-;;   STEP-2: Run query replace 
+;;   STEP-2: Run query replace
 ;;
 ;;        `M-s M-% (\d+)---(\d+) <RET> \g<1>456\g<2> <RET>'
 ;;
@@ -282,7 +282,7 @@
 ;;       buffer `*RE-Builder*'. The indicator will be displayed
 ;;       like these: `[isxe]' for Perl, `[imxe]' for Ruby,
 ;;       `[ie]' for JavaScript and [ISXe] for Python.
-;;       
+;;
 ;; `M-s M-i'
 ;; `M-x foreign-regexp/toggle-case-fold <RET>'
 ;;
@@ -531,7 +531,7 @@
 ;; ===========
 ;; You can use regexp syntax of your choice of language, if you
 ;; write four external commands below with the language:
-;; 
+;;
 ;;   `foreign-regexp/replace/external-command'
 ;;   `foreign-regexp/occur/external-command'
 ;;   `foreign-regexp/search/external-command'
@@ -765,7 +765,7 @@ When LIMIT is NIL, match won't be limited.
                        (funcall 'foreign-regexp/search/forward
                                 regexp bound noerror count ,g-limit))
                       (t
-                       (funcall ,g-orig-re-fwd-fn 
+                       (funcall ,g-orig-re-fwd-fn
                                 regexp bound noerror count)))))
              (setf (symbol-function 're-search-backward)
                    (lambda (regexp &optional bound noerror count)
@@ -933,10 +933,10 @@ supported by current foreign regexp."
 (defun foreign-regexp/toggle-case-fold (&optional no-message)
   "Toggle `case-fold-search'."
   (interactive)
-  
+
   (when (not (foreign-regexp/case-fold-available-p))
     (error "[foreign-regexp] Search option `Case Insensitive' is not supported by current foreign regexp."))
-  
+
   (run-hooks 'foreign-regexp/case-fold-will-change-hook)
   (cond
    (isearch-mode
@@ -947,7 +947,7 @@ supported by current foreign regexp."
     (setq case-fold-search
           (not case-fold-search))))
   (run-hooks 'foreign-regexp/case-fold-changed-hook)
-  
+
   (when (not no-message)
     (minibuffer-message
      (format "[foreign-regexp] Turned %s search option `Case Insensitive'."
@@ -959,15 +959,15 @@ supported by current foreign regexp."
 (defun foreign-regexp/toggle-dot-match (&optional no-message)
   "Toggle `foreign-regexp/dot-match-a-newline-p'."
   (interactive)
-  
+
   (when (not (foreign-regexp/dot-match-available-p))
     (error "[foreign-regexp] Search option `. Matches a Newline' is not supported by current foreign regexp."))
-  
+
   (run-hooks 'foreign-regexp/dot-match-will-change-hook)
   (setq foreign-regexp/dot-match-a-newline-p
         (not foreign-regexp/dot-match-a-newline-p))
   (run-hooks 'foreign-regexp/dot-match-changed-hook)
-  
+
   (when (not no-message)
     (minibuffer-message
      (format "[foreign-regexp] Turned %s search option `. Matches newline'."
@@ -979,15 +979,15 @@ supported by current foreign regexp."
 (defun foreign-regexp/toggle-ext-regexp (&optional no-message)
   "Toggle `foreign-regexp/use-extended-regexp-p'."
   (interactive)
-  
+
   (when (not (foreign-regexp/ext-regexp-available-p))
     (error "[foreign-regexp] Search option `Extended Regular Expression' is not supported by current foreign regexp."))
-  
+
   (run-hooks 'foreign-regexp/ext-regexp-will-change-hook)
   (setq foreign-regexp/use-extended-regexp-p
         (not foreign-regexp/use-extended-regexp-p))
   (run-hooks 'foreign-regexp/ext-regexp-changed-hook)
-  
+
   (when (not no-message)
     (minibuffer-message
      (format "[foreign-regexp] Turned %s search option `Extended Regexp'."
@@ -999,15 +999,15 @@ supported by current foreign regexp."
 (defun foreign-regexp/toggle-eval-replacement (&optional no-message)
   "Toggle `foreign-regexp/eval-replacement-p'."
   (interactive)
-  
+
   (when (not (foreign-regexp/eval-replacement-available-p))
     (error "[foreign-regexp] Replacement option `Eval Replacement' is not supported by current foreign regexp."))
-  
+
   (run-hooks 'foreign-regexp/eval-replacement-will-change-hook)
   (setq foreign-regexp/eval-replacement-p
         (not foreign-regexp/eval-replacement-p))
   (run-hooks 'foreign-regexp/eval-replacement-changed-hook)
-  
+
   (when (not no-message)
     (minibuffer-message
      (format "[foreign-regexp] Turned %s replacement option `Eval Replacement'."
@@ -1080,13 +1080,13 @@ NOTES FOR DEVELOPERS: Variables in REPLACEMENT should be interpolated
 
           (let ((enable-local-variables nil) ;; Ignore `code' variable.
                 (coding-system-for-write coding-sys-out))
-            
-            ;; Save information, which have to be passed to 
+
+            ;; Save information, which have to be passed to
             ;; external command, to temporally files.
-            (unwind-protect 
+            (unwind-protect
                 (progn
                   (set-default-file-modes #o0600)
-                  
+
                   (when body
                     (with-temp-file fn-out-body
                       (insert body)))
@@ -1103,9 +1103,9 @@ NOTES FOR DEVELOPERS: Variables in REPLACEMENT should be interpolated
                 (insert shell-script))
               (set-file-modes fn-cmd #o0700)
               (setq cmd-path fn-cmd)))
-          
+
           ;;(message "[foreign-regexp] Running...")
-          
+
           ;; Do search by external command.
           (let ((status (apply (if (eq window-system 'w32)
                                    #'foreign-regexp/.w32-call-process
@@ -1124,21 +1124,21 @@ NOTES FOR DEVELOPERS: Variables in REPLACEMENT should be interpolated
                      status
                      (with-current-buffer proc-output-buf
                        (buffer-substring (point-min) (point-max))))))
-          
+
           ;;(message "[foreign-regexp] Running...done")
-          
+
           (with-current-buffer proc-output-buf
             (when (/= (point-min) (point-max))
               (message "[foreign-regexp] messages from %s:\n%s"
                        cmd-basename
                        (buffer-substring (point-min) (point-max)))))
-          
+
           ;; Parse result from external command.
           (let ((coding-system-for-read coding-sys-in))
             ;; Loaded data will be stored to the local variable `result'.
             (load (expand-file-name fn-in-result) nil t t))
           result)
-      
+
       ;; Cleanup.
       (and (file-exists-p fn-out-regexp     ) (delete-file fn-out-regexp     ))
       (and (file-exists-p fn-out-replacement) (delete-file fn-out-replacement))
@@ -1324,13 +1324,13 @@ regexp does not support this replacement option.")
                   foreign-regexp/search-option-indicator/no-case-fold-str)
                  (case-fold-search
                   foreign-regexp/search-option-indicator/case-fold-str)
-                 (t 
+                 (t
                   foreign-regexp/search-option-indicator/no-case-fold-str))
                 (if foreign-regexp/dot-match-a-newline-p
                     foreign-regexp/search-option-indicator/dot-match-str
                   foreign-regexp/search-option-indicator/no-dot-match-str)
                 (if foreign-regexp/use-extended-regexp-p
-                    foreign-regexp/search-option-indicator/ext-regexp-str 
+                    foreign-regexp/search-option-indicator/ext-regexp-str
                   foreign-regexp/search-option-indicator/no-ext-regexp-str)
                 (cond
                  ((and (symbolp foreign-regexp/transition/.running-cmd)
@@ -1387,7 +1387,7 @@ and `foreign-regexp/occur'."
           ;; Do not call this `read-from-minibuffer' recursively.
           (foreign-regexp/ad-disable 'read-from-minibuffer 'around 'foreign-regexp/read-from-minibuf/with-search-option-indicator)
           (foreign-regexp/ad-activate 'read-from-minibuffer)
-          
+
           ;; Do not toggle search options of *Minibuf-N* while reading
           ;; regexps, toggle re-options of CURRENT BUFFER instead.
           (lexical-let ((cur-buf (current-buffer)))
@@ -1409,7 +1409,7 @@ and `foreign-regexp/occur'."
                (foreign-regexp/dot-match-will-change-hook        foreign-regexp/toggle-dot-match)
                (foreign-regexp/ext-regexp-will-change-hook       foreign-regexp/toggle-ext-regexp)
                (foreign-regexp/eval-replacement-will-change-hook foreign-regexp/toggle-eval-replacement))))
-          
+
           ;; Whenever search option is changed, restart `read-from-minibuffer' to
           ;; redisplay prompt.
           (while (setq initial-contents
@@ -1451,13 +1451,13 @@ This advice will be enabled by `foreign-regexp/re-builder/query-replace-on-targe
 and `foreign-regexp/re-builder/occur-on-target-buffer'."
   (foreign-regexp/ad-disable 'read-from-minibuffer 'before 'foreign-regexp/read-from-minibuf/with-initial-contents)
   (foreign-regexp/ad-activate 'read-from-minibuffer)
-  
+
   (when (and (boundp 'foreign-regexp/.initial-contents)
              (stringp foreign-regexp/.initial-contents))
     (setq initial-contents
           (cons foreign-regexp/.initial-contents
                 (1+ (length foreign-regexp/.initial-contents)))))
-  
+
   (setq foreign-regexp/.initial-contents nil))
 (foreign-regexp/ad-disable 'read-from-minibuffer
                            'before
@@ -1498,7 +1498,7 @@ and `foreign-regexp/re-builder/occur-on-target-buffer'."
                        :active (foreign-regexp/non-incremental/available-p)
                        :help "Search backward for a foreign regular expression"]
                       "separator-repeat-search")
-  
+
   (easy-menu-add-item menu-bar-i-search-menu
                       nil
                       ["Forward Foreign Regexp..." foreign-regexp/isearch-forward
@@ -1597,7 +1597,7 @@ and `foreign-regexp/re-builder/occur-on-target-buffer'."
                ;; CALLBACK
                `(lambda (&rest args)
                   (interactive)
-                  (foreign-regexp/regexp-type/set (quote ,(cadr (memq :name kv-lst))))) 
+                  (foreign-regexp/regexp-type/set (quote ,(cadr (memq :name kv-lst)))))
                :style 'radio
                :selected (eq (and (boundp 'foreign-regexp/regexp-type) ;; For compiler
                                   foreign-regexp/regexp-type)
@@ -1644,25 +1644,25 @@ and `foreign-regexp/re-builder/occur-on-target-buffer'."
 ;; ----------------------------------------------------------------------------
 (defun foreign-regexp/key-bindings/install ()
   "Install key bindings for foreign regexp."
-  
+
   ;; For Emacs < 23.
   (when (string< emacs-version "23")
     (defvar search-map (make-sparse-keymap)
       "Keymap for search related commands.")
     (define-key esc-map "s" search-map))
-  
+
   (defvar reb-mode-search-map  (make-sparse-keymap)
     "Keymap for search related commands.")
-  
+
   ;; keys for `foreign-regexp' commands.
   ;;
   (when (boundp 'search-map) ;; For compiler
-    
+
     ;; Prefix keys.
     ;;
     (define-key isearch-mode-map    "\M-s"  search-map)
     (define-key reb-mode-map        "\M-s"  reb-mode-search-map)
-    
+
     ;; Keys for `foreign-regexp' commands.
     ;;
     (define-key search-map          "\M-o"  'foreign-regexp/occur)
@@ -1676,7 +1676,7 @@ and `foreign-regexp/re-builder/occur-on-target-buffer'."
     (define-key search-map          "\M-a"  'foreign-regexp/align)
     (define-key search-map          "\M-l"  're-builder)
     (define-key search-map          "\M-\\" 'foreign-regexp/quote-meta-in-region)
-    
+
     (define-key reb-mode-search-map "\M-o"  'foreign-regexp/re-builder/occur-on-target-buffer)
     (define-key reb-mode-search-map "\M-%"  'foreign-regexp/re-builder/query-replace-on-target-buffer)
     (define-key reb-mode-search-map "\M-s"  'foreign-regexp/re-builder/isearch-forward-on-target-buffer)
@@ -1688,18 +1688,18 @@ and `foreign-regexp/re-builder/occur-on-target-buffer'."
     (define-key reb-mode-search-map "\M-a"  'foreign-regexp/re-builder/align-on-target-buffer)
     (define-key reb-mode-search-map "\M-l"  're-builder)
     (define-key reb-mode-search-map "\M-\\" 'foreign-regexp/quote-meta-in-region)
-    
+
     ;; Keys for changing `foreign-regexp' options.
     ;;
     (define-key search-map          "\M-i" 'foreign-regexp/toggle-case-fold)
     (define-key search-map          "\M-m" 'foreign-regexp/toggle-dot-match)
     (define-key search-map          "\M-x" 'foreign-regexp/toggle-ext-regexp)
     (define-key search-map          "\M-e" 'foreign-regexp/toggle-eval-replacement)
-    
+
     (define-key reb-mode-search-map "\M-i" 'foreign-regexp/re-builder/toggle-case-fold-on-target-buffer)
     (define-key reb-mode-search-map "\M-m" 'foreign-regexp/re-builder/toggle-dot-match-on-target-buffer)
     (define-key reb-mode-search-map "\M-x" 'foreign-regexp/re-builder/toggle-ext-regexp-on-target-buffer)
-    
+
     ;; XXX: This overrides a key for `next-matching-history-element'
     ;;      in `minibuffer-local-map', so please rebind it to a
     ;;      key you like.
@@ -1730,16 +1730,16 @@ Twelve arguments describe below will be passed to the command.
 
   1st: Path of a file which contains the text to which the
        search/replace operation will be applied.
-       
+
        The text in this file is encoded in the value of
        `foreign-regexp/output-coding-system'.
-       
+
   2nd: Path of a file to which the command should write the result
        of current search operation.
-       
+
        The external command have to output a form like:
-       
-         (setq result 
+
+         (setq result
                (
                 ;; Search results by non warp-around search.
                 (((1st-MATCH-START 1st-MATCH-END
@@ -1760,58 +1760,58 @@ Twelve arguments describe below will be passed to the command.
                    Nth-MATCH-CAPTURE-1-START Nth-MATCH-CAPTURE-1-END
                    ...)
                   \"REPLACEMENT-FOR-Nth-MATCH\"))))
-       
+
        to this file.
-       
+
        Note that each start and end position in the form should be
        an offset from beginning of the text which has been searched.
        (This means each number should be started from 0, not from 1)
-       
+
        The text in this file must be encoded in the value of
        `foreign-regexp/input-coding-system'.
-       
+
   3rd: Path of a file in which the regexp we want to search is written.
        The command have a responsibility to search this regexp
        from the file specified by 1st argument, then write start and
        end positions of each match to the file specified by 2nd argument.
-       
+
        The text in this file is encoded in the value of
        `foreign-regexp/output-coding-system'.
-       
+
   4th: Path of a file in which the replacement expression is written.
        The command have a responsibility to interpolate variables
        in the expression on each match, or evaluate it when the 8th
        argument is not empty string or non-nil, then write them to
        the file specified by 2nd argument.
- 
+
        The text in this file is encoded in the value of
        `foreign-regexp/output-coding-system'.
-       
+
   5th: A dot matches newline flag.
        When the value of this flag is not empty string or non-nil,
        the character `.' should be matched to a newline character.
-       
+
   6th: A case sensitive flag.
        When the value of this flag is not empty string or non-nil,
        the match operation should be done case-sensitively.
-       
+
   7th: An extended regular expression flag.
        When the value of this flag is not empty string or non-nil,
        the current search regexp (see 3rd argument) should be
        interpreted as extended regular expression.
-       
+
   8th: An eval replacement as expression flag.
        When the value of this flag is not empty string or non-nil,
        replacement expression given by 3rd argument will
        be evaluated as an expression when the foreign regexp
        supports this feature.
-       
+
   9th: The number of search limit.
        The search/replace operation will be stopped when the count
        of the match is reached to this number.
        When the value of this argument is empty string or `NIL',
        the search/replacement operation will be applied unlimited
-       
+
  10th: Current point. (start from zero)
        When the value of this argument is empty string or `NIL',
        the search/replacement operation will be stated from
@@ -1829,7 +1829,7 @@ Twelve arguments describe below will be passed to the command.
 ")
 
 (defvar foreign-regexp/replace/shell-script nil
-  "A shell script which will be run as 
+  "A shell script which will be run as
 `foreign-regexp/replace/external-command'
 when it has nil value.")
 
@@ -1936,7 +1936,7 @@ the list `foreign-regexp/replace/ovs-on-match/data'."
                   (and min (- min offset))
                   (and max (- max offset)))))
     (foreign-regexp/replace/parse-search-result result offset)
-    
+
     ;; Detect index of neighborhood overlay of a pointer.
     (position (car (member-if
                     #'(lambda (ov)
@@ -2024,7 +2024,7 @@ Also list in REPLACEMENT and REPEAT-COUNT are not supported."
          (replace-count 0)
          (multi-buffer nil)
          (recenter-last-op nil)      ; Start cycling order with initial position.
-         
+
          (min nil)
          ;; If non-nil, it is marker saying where in the buffer to stop.
          (max nil)
@@ -2092,7 +2092,7 @@ Also list in REPLACEMENT and REPEAT-COUNT are not supported."
               ;; Calculate the replacement string, if necessary.
               (set-match-data real-match-data)
               (update-next-replacement idx)
-              
+
               (if (not query-flag)
                   (progn
                     (foreign-regexp/replace/highlight/dispose)
@@ -2214,7 +2214,7 @@ Also list in REPLACEMENT and REPEAT-COUNT are not supported."
                                       min max))
                            (update-next-replacement idx)
                            (update-real-match-data idx))
-                          
+
                           ;; Edit replacement.
                           ((eq def 'edit-replacement)
                            (let ((opos (save-excursion
@@ -2237,7 +2237,7 @@ Also list in REPLACEMENT and REPEAT-COUNT are not supported."
                                       min max))
                            (update-next-replacement idx)
                            (update-real-match-data idx)
-                           
+
                            (if replaced
                                (setq idx (and idx (1- idx)))
                              (replace-match next-replacement t t)
@@ -2251,13 +2251,13 @@ Also list in REPLACEMENT and REPEAT-COUNT are not supported."
                                            (goto-char (match-end 0))
                                            (point-marker)))))
                              (set-marker-insertion-type opos t)
-                             
+
                              (replace-match "" t t)
                              (setq real-match-data (replace-match-data
                                                     nil real-match-data))
                              (foreign-regexp/replace/ovs-on-match/dispose)
                              (foreign-regexp/replace/highlight/dispose)
-                             
+
                              (save-excursion (recursive-edit))
 
                              (goto-char opos)
@@ -2269,7 +2269,7 @@ Also list in REPLACEMENT and REPEAT-COUNT are not supported."
                            (if (numberp idx)
                                (setq idx (1- idx)) ;;Do not forward current match.
                              (setq idx (foreign-regexp/replace/ovs-on-match/get-count))) ;;Done.
-                           
+
                            (setq replaced t))
 
                           ;; Note: we do not need to treat `exit-prefix'
@@ -2829,7 +2829,7 @@ in BUF for REGEXP by external command."
            (cur-tick           (buffer-chars-modified-tick buf))
            (cur-pt-min         (point-min))
            (cur-pt-max         (point-max)))
-      
+
       (when (and cache-alst-for-str
                  (or (not (equal cached-limit  limit))
                      (/=         cached-tick   cur-tick)
@@ -2903,7 +2903,7 @@ in BUF for REGEXP by external command."
                                   (car item))
                           parsed-result))))
           (setq parsed-result (reverse parsed-result))
-          
+
           ;; Remove old cache.
           (foreign-regexp/search/cache/clear buf regexp)
 
@@ -2951,7 +2951,7 @@ See `isearch-forward-regexp' and `isearch-backward-regexp' for
 more information."
   (interactive "P\np")
   (foreign-regexp/isearch/assert-available)
-  
+
   ;; Setup `isearch-search-fun-function'.
   (when (not (boundp 'foreign-regexp/isearch/.orig-isearch-search-fun-function))
     (defvar foreign-regexp/isearch/.orig-isearch-search-fun-function
@@ -2959,11 +2959,11 @@ more information."
   (setq isearch-search-fun-function #'foreign-regexp/isearch/isearch-search-fun-function)
   (add-hook 'isearch-mode-end-hook
             'foreign-regexp/isearch/.isearch-mode-end-hook-fn)
-  
+
   ;; Just for prompt message.
   (foreign-regexp/ad-enable 'isearch-message-prefix 'after 'foreign-regexp/isearch/modify-prompt)
   (foreign-regexp/ad-activate 'isearch-message-prefix)
-  
+
   (isearch-mode t (null not-regexp) nil (not no-recursive-edit)))
 
 
@@ -2978,7 +2978,7 @@ See `isearch-forward-regexp' and `isearch-backward-regexp' for
 more information."
   (interactive "P\np")
   (foreign-regexp/isearch/assert-available)
-  
+
   ;; Setup `isearch-search-fun-function'.
   (when (not (boundp 'foreign-regexp/isearch/.orig-isearch-search-fun-function))
     (defvar foreign-regexp/isearch/.orig-isearch-search-fun-function
@@ -2986,11 +2986,11 @@ more information."
   (setq isearch-search-fun-function #'foreign-regexp/isearch/isearch-search-fun-function)
   (add-hook 'isearch-mode-end-hook
             'foreign-regexp/isearch/.isearch-mode-end-hook-fn)
-  
+
   ;; Just for prompt message.
   (foreign-regexp/ad-enable 'isearch-message-prefix 'after 'foreign-regexp/isearch/modify-prompt)
   (foreign-regexp/ad-activate 'isearch-message-prefix)
-  
+
   (isearch-mode nil (null not-regexp) nil (not no-recursive-edit)))
 
 
@@ -3043,11 +3043,11 @@ more information."
   "Update display when search option is changed."
   (when isearch-mode
     (setq isearch-success t isearch-adjusted t)
-    
+
     ;; Force run `isearch-lazy-highlight-new-loop'.
     (setq isearch-lazy-highlight-last-string nil)
     (isearch-update)
-    
+
     ;; Suppress messages.
     (when (boundp 'no-message) ;; For compiler.
       (setq no-message t))))
@@ -3077,11 +3077,11 @@ to each search option changed hook."
       (setq isearch-search-fun-function
             foreign-regexp/isearch/.orig-isearch-search-fun-function)
       (makunbound 'foreign-regexp/isearch/.orig-isearch-search-fun-function))
-    
+
     ;; Just for prompt message.
     (foreign-regexp/ad-disable 'isearch-message-prefix 'after 'foreign-regexp/isearch/modify-prompt)
     (foreign-regexp/ad-activate 'isearch-message-prefix)
-    
+
     (remove-hook 'isearch-mode-end-hook
                  'foreign-regexp/isearch/.isearch-mode-end-hook-fn)))
 
@@ -3146,7 +3146,7 @@ supposed to be placed after whitespaces.
 When called with prefix argument, align the current region
 using a full foreign regexp read from the minibuffer.
 
-Example) 
+Example)
 
    < Use regexp of Perl in this example. >
 
@@ -3210,7 +3210,7 @@ See also `align-regexp'."
                          (cons 'spacing spacing)
                        (cons 'column (abs spacing)))
                      (cons 'repeat repeat)))))
-    
+
     (foreign-regexp/search/with-regarding-string-as-foreign-regexp
         (regexp)
       (align-region beg end 'entire rule nil nil))))
@@ -3254,10 +3254,10 @@ When the value of an attribute `regexp-type' of a rule is
                 (regexp     (cdr (assq 'regexp     rule))))
             (cond
              ((and (stringp regexp)
-                   
+
                    (or ;; `aien-type' is
                     ;; T
-                    (eq regexp-type t) 
+                    (eq regexp-type t)
                     ;; LIST
                     (and (listp regexp-type)
                          (memq foreign-regexp/regexp-type regexp-type))
@@ -3386,7 +3386,7 @@ when it has nil value.")
   "Quote meta characters in a REGEXP in manner of external command."
   (interactive)
   (foreign-regexp/quote-meta/assert-available)
-  
+
   (foreign-regexp/run-external-command
    foreign-regexp/quote-meta/external-command
    foreign-regexp/quote-meta/shell-script
@@ -3442,11 +3442,11 @@ NOTE: RE-VAR will be defined as lexical variable by this macro."
   (interactive)
   (foreign-regexp/re-builder/assert-in-reb-buffer)
   (foreign-regexp/replace/assert-available)
-  
+
   (foreign-regexp/re-builder/exec-with-current-re regexp
                                                   (when (match-beginning 0)
                                                     (goto-char (match-beginning 0)))
-                                                  
+
                                                   (foreign-regexp/read-from-minibuf/with-initial-contents regexp
                                                                                                           (let ((this-command 'foreign-regexp/query-replace))
                                                                                                             (call-interactively 'foreign-regexp/query-replace)))))
@@ -3460,7 +3460,7 @@ NOTE: RE-VAR will be defined as lexical variable by this macro."
   (interactive)
   (foreign-regexp/re-builder/assert-in-reb-buffer)
   (foreign-regexp/occur/assert-available)
-  
+
   (foreign-regexp/re-builder/exec-with-current-re regexp
                                                   (foreign-regexp/read-from-minibuf/with-initial-contents regexp
                                                                                                           (let ((this-command 'foreign-regexp/occur))
@@ -3475,7 +3475,7 @@ NOTE: RE-VAR will be defined as lexical variable by this macro."
   (interactive)
   (foreign-regexp/re-builder/assert-in-reb-buffer)
   (foreign-regexp/isearch/assert-available)
-  
+
   (foreign-regexp/re-builder/exec-with-current-re regexp
                                                   (add-hook 'isearch-mode-hook
                                                             (foreign-regexp/alambda ()
@@ -3495,7 +3495,7 @@ NOTE: RE-VAR will be defined as lexical variable by this macro."
   (interactive)
   (foreign-regexp/re-builder/assert-in-reb-buffer)
   (foreign-regexp/isearch/assert-available)
-  
+
   (foreign-regexp/re-builder/exec-with-current-re regexp
                                                   (add-hook 'isearch-mode-hook
                                                             (foreign-regexp/alambda ()
@@ -3516,7 +3516,7 @@ current RE on `reb-target-buffer'."
   (interactive)
   (foreign-regexp/re-builder/assert-in-reb-buffer)
   (foreign-regexp/non-incremental/assert-available)
-  
+
   (foreign-regexp/re-builder/exec-with-current-re regexp
                                                   (foreign-regexp/read-from-minibuf/with-initial-contents regexp
                                                                                                           (let ((this-command 'foreign-regexp/non-incremental/search-forward))
@@ -3532,7 +3532,7 @@ current RE on `reb-target-buffer'."
   (interactive)
   (foreign-regexp/re-builder/assert-in-reb-buffer)
   (foreign-regexp/non-incremental/assert-available)
-  
+
   (foreign-regexp/re-builder/exec-with-current-re regexp
                                                   (foreign-regexp/read-from-minibuf/with-initial-contents regexp
                                                                                                           (let ((this-command 'foreign-regexp/non-incremental/search-backward))
@@ -3547,7 +3547,7 @@ current RE on `reb-target-buffer'."
   (interactive)
   (foreign-regexp/re-builder/assert-in-reb-buffer)
   (foreign-regexp/align/assert-available)
-  
+
   (foreign-regexp/re-builder/exec-with-current-re regexp
                                                   (foreign-regexp/read-from-minibuf/with-initial-contents regexp
                                                                                                           (let ((this-command 'foreign-regexp/align))
@@ -3561,7 +3561,7 @@ current RE on `reb-target-buffer'."
   "Toggle `case-fold-search' on `reb-target-buffer'."
   (interactive)
   (foreign-regexp/re-builder/assert-in-reb-buffer)
-  
+
   (with-current-buffer reb-target-buffer
     (foreign-regexp/toggle-case-fold no-message)))
 
@@ -3573,7 +3573,7 @@ current RE on `reb-target-buffer'."
   "Toggle `foreign-regexp/dot-match-a-newline-p' on `reb-target-buffer'."
   (interactive)
   (foreign-regexp/re-builder/assert-in-reb-buffer)
-  
+
   (with-current-buffer reb-target-buffer
     (foreign-regexp/toggle-dot-match no-message)))
 
@@ -3585,7 +3585,7 @@ current RE on `reb-target-buffer'."
   "Toggle `foreign-regexp/use-extended-regexp-p' on `reb-target-buffer'."
   (interactive)
   (foreign-regexp/re-builder/assert-in-reb-buffer)
-  
+
   (with-current-buffer reb-target-buffer
     (foreign-regexp/toggle-ext-regexp no-message)))
 
@@ -3704,7 +3704,7 @@ current RE on `reb-target-buffer'."
   (case reb-re-syntax
     ((foreign-regexp)
      (foreign-regexp/re-builder/assert-available)
-     
+
      ;; Count number of subexp in cache data.
      ;;
      (let ((retval 0))
@@ -3837,10 +3837,10 @@ to each search option changed hook."
     (with-current-buffer reb-target-buffer
       (add-hook 'foreign-regexp/case-fold-changed-hook
                 'foreign-regexp/re-builder/search-option-changed-hook-fn)
-      
+
       (add-hook 'foreign-regexp/dot-match-changed-hook
                 'foreign-regexp/re-builder/search-option-changed-hook-fn)
-      
+
       (add-hook 'foreign-regexp/ext-regexp-changed-hook
                 'foreign-regexp/re-builder/search-option-changed-hook-fn))))
 
@@ -4077,9 +4077,9 @@ to each search option changed hook."
             (op-kind               (cadr (memq :op-kind rec)))
             (command               (cadr (memq :command rec)))
             (transition-allowed-in (cadr (memq :transition-allowed-in rec))))
-        
+
         (setq table (delq rec table))
-        
+
         (dolist (targ-rec table)
           (let ((targ-label   (cadr (memq :label   targ-rec)))
                 (targ-op-kind (cadr (memq :op-kind targ-rec)))
@@ -4120,7 +4120,7 @@ transition to another foreign-regexp command."
                                              "TRANSITION: CALL: %s, %s"
                                              (quote ,targ-command)
                                              (quote ,ad-name-make-transition-to))
-                      
+
                       (lexical-let ((regexp isearch-string))
                         (unwind-protect
                             (progn
@@ -4162,7 +4162,7 @@ transition to another foreign-regexp command."
                     ;; Should be turned on by `isearch-mode-hook'.
                     (foreign-regexp/ad-disable (quote ,targ-command) 'around (quote ,ad-name-make-transition-to))
                     (foreign-regexp/ad-activate (quote ,targ-command))
-                    
+
                     ;; When `foreign-regexp/isearch' will be turned on,
                     ;; advise another foreign-regexp commands so that
                     ;; we can exit an isearch session and make a
@@ -4171,14 +4171,14 @@ transition to another foreign-regexp command."
                       (foreign-regexp/ad-enable (quote ,targ-command) 'around (quote ,ad-name-make-transition-to))
                       (foreign-regexp/ad-activate (quote ,targ-command)))
                     (add-hook 'isearch-mode-hook (quote ,fn-name-turn-on-transition))
-                    
+
                     ;; Disable advices of another foreign-regexp commands
                     ;; when `foreign-regexp/isearch' will be turned off.
                     (defun ,fn-name-turn-off-transition ()
                       (foreign-regexp/ad-disable (quote ,targ-command) 'around (quote ,ad-name-make-transition-to))
                       (foreign-regexp/ad-activate (quote ,targ-command)))
                     (add-hook 'isearch-mode-end-hook (quote ,fn-name-turn-off-transition))))))
-              
+
               ((minibuf-cmd)
                (let ((ad-name-catch-transition-to (intern
                                                    (format
@@ -4249,11 +4249,11 @@ while this function is running."
                                              "TRANSITION: CALL: %s, %s"
                                              (quote ,transition-allowed-in)
                                              (quote ,ad-name-allow-transition))
-                      
+
                       (let ((,g-transition-allowed-p t))
                         ad-do-it))
                     (foreign-regexp/ad-activate (quote ,transition-allowed-in))
-                    
+
                     ;; Advise to foreign-regexp commands, which reads
                     ;; input from minibuffer, to make transition to
                     ;; another foreign-regexp command when a tag
@@ -4262,25 +4262,25 @@ while this function is running."
                                          ,ad-name-catch-transition-to
                                          (&rest args))
                       "Make a transition to another foreign-regexp command."
-                      
+
                       ;; DEBUGGING
                       (foreign-regexp/.debug foreign-regexp/transition/debug-advices
                                              "TRANSITION: CALL: %s, %s"
                                              (quote ,command)
                                              (quote ,ad-name-catch-transition-to))
-                      
+
                       ;; Prevent duplicate calls.
                       (when (eq this-command
                                 foreign-regexp/transition/.running-cmd)
                         (error "[foreign-regexp] Command attempted to use minibuffer while in minibuffer"))
-                      
+
                       (unwind-protect
                           (progn
                             (foreign-regexp/ad-enable (quote ,targ-command)
                                                       'around
                                                       (quote ,ad-name-throw-transition-to))
                             (foreign-regexp/ad-activate (quote ,targ-command))
-                            
+
                             (foreign-regexp/catch-case var
                                                        ad-do-it
                                                        (,ad-name-throw-transition-to
@@ -4289,7 +4289,7 @@ while this function is running."
                                                                                "TRANSITION: CATCHED BY: %s, %s\n"
                                                                                (quote ,command)
                                                                                (quote ,ad-name-catch-transition-to))
-                                                        
+
                                                         (lexical-let ((regexp (cadr var))
                                                                       (orig-messasge-fn
                                                                        (symbol-function 'message)))
@@ -4336,7 +4336,7 @@ while this function is running."
                         (foreign-regexp/ad-disable (quote ,targ-command) 'around (quote ,ad-name-throw-transition-to))
                         (foreign-regexp/ad-activate (quote ,targ-command))))
                     (foreign-regexp/ad-activate (quote ,command))
-                    
+
                     ;; Advise other foreign-regexp commands to throw a tag
                     ;; so that we can exit current foreign-regexp command and
                     ;; make transition to another one.
@@ -4368,7 +4368,7 @@ as the value of a tag."
                                                    "TRANSITION: THROWN: %s ,%s"
                                                    (quote ,ad-name-throw-transition-to)
                                                    contents)
-                            
+
                             (throw (quote ,ad-name-throw-transition-to)
                                    contents))))
                        (t
@@ -4459,34 +4459,34 @@ Arguments are:
 
   OUTPUT-CODING-SYSTEM:
         See `foreign-regexp/output-coding-system'.
-      
+
   INDICATOR-CASE-FOLD:
         See `foreign-regexp/search-option-indicator/case-fold-str'.
-      
+
   INDICATOR-NO-CASE-FOLD:
         See `foreign-regexp/search-option-indicator/no-case-fold-str'.
-      
+
   INDICATOR-DOT-MATCH:
         See `foreign-regexp/search-option-indicator/dot-match-str'.
-      
+
   INDICATOR-NO-DOT-MATCH:
         See `foreign-regexp/search-option-indicator/no-dot-match-str'.
-      
+
   INDICATOR-EXT-REGEXP:
         See `foreign-regexp/search-option-indicator/ext-regexp-str'.
-      
+
   INDICATOR-NO-EXT-REGEXP:
         See `foreign-regexp/search-option-indicator/no-ext-regexp-str'.
-      
+
   INDICATOR-EVAL-REPLACEMENT:
         See `foreign-regexp/search-option-indicator/eval-replacement-str'.
-  
+
   INDICATOR-NO-EVAL-REPLACEMENT:
         See `foreign-regexp/search-option-indicator/no-eval-replacement-str'.
-  
+
   INDICATOR-SEPARATOR:
         See `foreign-regexp/search-option-indicator/separator-str'.
-      
+
   CMD-PATH-REPLACE:
         See `foreign-regexp/replace/external-command'.
 
@@ -4550,7 +4550,7 @@ Arguments are:
   ;; When regex type is redefined, reload it.
   (when (eq foreign-regexp/regexp-type name)
     (foreign-regexp/regexp-type/set name))
-  
+
   (foreign-regexp/regexp-type/custom-widget/regexp-type-selector/update))
 
 ;; ----------------------------------------------------------------------------
@@ -4671,9 +4671,9 @@ sub main () {
     my $fn_out    = shift @ARGV or die \"No output file name!\";
     my $fn_pat    = shift @ARGV or die \"No pattern file name!\";
     my $code      = 'utf8';
-    
+
     umask 0177;
-    
+
     my($str_pat);
     use PerlIO::encoding;
     local $PerlIO::encoding::fallback = Encode::FB_CROAK(); # Die on invalid char.
@@ -4683,14 +4683,14 @@ sub main () {
         $str_pat = quotemeta($str_pat);
         escape_perl_str_for_emacs(\\$str_pat)
     }
-    
+
     {
         my $fh_out = FileHandle->new($fn_out, \">:encoding($code)\");
-        
+
         print $fh_out \"(setq result \\\"${str_pat}\\\")\\n\";
         print $fh_out \";;; EOF\\n\";
     }
-    
+
     exit 0;
 }
 
@@ -4712,14 +4712,14 @@ end
 
 def main ()
   fn_out, fn_pat = ARGV
-  
+
   str_pat = open(fn_pat, 'r:UTF-8') {|f| f.read}
-  
+
   $stdout = open(fn_out, 'w:UTF-8')
-  
+
   retval = Regexp.escape(str_pat)
   escape_ruby_str_for_emacs!(retval)
-  
+
   print '(setq result \"'
   print retval
   print '\")'
@@ -4759,12 +4759,12 @@ function quotemeta (txt) {
 function main (argv) {
     var fn_out   = argv[2];
     var fn_regx  = argv[3];
-    
+
     var str_regx = FS.readFileSync(fn_regx, ENCODING);
-    
+
     str_regx = quotemeta(str_regx);
     str_regx = escape_js_str_for_emacs(str_regx);
-    
+
     write(fn_out, \"(setq result \\\"\");
     write(fn_out, str_regx);
     write(fn_out, \"\\\")\\n\");
@@ -4795,18 +4795,18 @@ def escape_python_str_for_emacs (txt):
 
 def main ():
     [prog, fn_out, fn_regx] = sys.argv
-    
+
     str_regx  = codecs.open(fn_regx, 'r', 'utf_8').read()
-    
+
     f = codecs.open(fn_out, 'w', 'utf8')
-    
+
     str_regx = re.escape(str_regx);
     str_regx = escape_python_str_for_emacs(str_regx);
-    
+
     f.write(\"(setq result \\\"\")
     f.write(str_regx)
     f.write(\"\\\")\\n;;; EOF\\n\")
-    
+
     exit(0)
 
 main()
@@ -4867,42 +4867,42 @@ sub process_replace {
     my $pos_start    = shift;
     my $rgn_beg      = shift;
     my $rgn_end      = shift;
-    
+
     my $pos_wrap_end = undef;
     my $count        = 0;
-    
+
     my $regx = eval (\"qr/\\${\\$r_str_regx}/mo\" .
                      ( $dot_p  ? \"s\" : \"\") .
                      (!$case_p ? \"i\" : \"\") .
                      ( $ext_p  ? \"x\" : \"\"));
     die $EVAL_ERROR if $EVAL_ERROR;
-    
+
     my $interpolate_fn = ($eval_p
                           ? eval_fn_gen($r_str_rpla)
                           : interpolate_fn_gen($r_str_rpla));
     die \"Syntax error in replacement \\\"${$r_str_rpla}\\\":\\n${EVAL_ERROR}\" if $EVAL_ERROR;
-    
+
     my $replace_fn = sub {
         my $rgn_beg = shift;
         my $rgn_end = shift;
         my $wrap_p  = shift;
-        
-        
+
+
         pos(${$r_str_body}) = $rgn_beg;
-        
+
         while (((defined $limit) ? ($count < $limit) : 1) && (${$r_str_body} =~ m/${regx}/g)) {
             my $match_beg = $LAST_MATCH_START[0];
             my $match_end = $LAST_MATCH_END  [0];
-            
+
             last if ($match_end > $rgn_end);
             last if ($wrap_p && (defined $pos_wrap_end) && ($pos_wrap_end <= $match_beg));
             $pos_wrap_end = $match_beg if ((not $wrap_p) && (not (defined $pos_wrap_end)));
-            
+
             my $replacement = eval { $interpolate_fn->() };
             die \"Error while interpolating replacement \\\"${$r_str_rpla}\\\":\\n${EVAL_ERROR}\" if $EVAL_ERROR;
-            
+
             escape_perl_str_for_emacs(\\$replacement);
-            
+
             print \" ((\";
             print $match_beg, ' ';
             print $match_end, ' ';
@@ -4913,11 +4913,11 @@ sub process_replace {
             print \" )\";
             print '\"', $replacement, '\"';
             print \" )\", \"\\n\";
-            
+
             ++$count;
         }
     };
-    
+
     $rgn_beg   = $rgn_beg || 0;
     $rgn_end   = $rgn_end || length(${$r_str_body});
     $pos_start = (($pos_start < $rgn_beg)
@@ -4925,12 +4925,12 @@ sub process_replace {
                   : (($pos_start > $rgn_end)
                      ? $rgn_end
                      : $pos_start));
-    
+
     print \"(setq result '(\";
     print \" (\";
     $replace_fn->($pos_start, $rgn_end, 0);
     print \" )\";
-    
+
     # Search wrap around.
     print \" (\";
     $replace_fn->($rgn_beg,
@@ -4954,11 +4954,11 @@ sub main () {
     my $pos_start = @ARGV ? shift(@ARGV) : die \"No start position.\";
     my $rgn_beg   = shift @ARGV;
     my $rgn_end   = shift @ARGV;
-    
+
     my $code      = 'utf8';
-    
+
     my($str_body, $str_regx, $str_rpla);
-    
+
     use PerlIO::encoding;
     local $PerlIO::encoding::fallback = Encode::FB_CROAK(); # Die on invalid char.
     {
@@ -4967,14 +4967,14 @@ sub main () {
         $str_regx = FileHandle->new($fn_regx, \"<:encoding($code)\")->getline;
         $str_rpla = $fn_rpla ? FileHandle->new($fn_rpla, \"<:encoding($code)\")->getline : \"\";
     }
-    
+
     umask 0177;
     *STDOUT = FileHandle->new($fn_out, \">:encoding($code)\");
-    
+
     process_replace(\\$str_body, \\$str_regx, \\$str_rpla,
                     $dot_p, $case_p, $ext_p, $eval_p,
                     length($limit) ? $limit : undef, $pos_start, $rgn_beg, $rgn_end);
-    
+
     exit 0;
 }
 
@@ -5003,7 +5003,7 @@ def process_replace (__str_body__, __str_regx__, __str_rpla__,
                      __limit__, __pos_start__, __rgn_beg__, __rgn_end__)
   __pos_wrap_end__ = nil
   __count__        = 0
-  
+
   __regx__ = Regexp.new(__str_regx__, ((__dot_p__  ? Regexp::MULTILINE : 0)  |
                                        (__case_p__ ? 0 : Regexp::IGNORECASE) |
                                        (__ext_p__  ? Regexp::EXTENDED  : 0)))
@@ -5016,22 +5016,22 @@ def process_replace (__str_body__, __str_regx__, __str_rpla__,
                          $stderr.print $!.message
                          exit! 1
                        end
-  
+
   __replace_fn__ = Proc.new { |__rgn_beg__, __rgn_end__, __wrap_p__|
     __pos__ = __rgn_beg__
     __last_0_width_pos__ = nil
-    
+
     while ((__limit__ ? (__count__ < __limit__) : true)&& __str_body__.match(__regx__, __pos__)) do
       m = Regexp.last_match
-      
+
       __match_beg__ = m.begin(0)
       __match_end__ = m.end(0)
       __0_width_p__ = (__match_beg__ == __match_end__)
-      
+
       break if (__match_end__ > __rgn_end__)
       break if (__wrap_p__ && __pos_wrap_end__ && (__pos_wrap_end__ <= __match_beg__))
       __pos_wrap_end__ = __match_beg__ if ((not __wrap_p__) && (not __pos_wrap_end__))
-      
+
       if (__0_width_p__ && __last_0_width_pos__ && (__match_beg__ == __last_0_width_pos__)) then
         # Do not enter into endless loop.
         __pos__ += 1
@@ -5042,7 +5042,7 @@ def process_replace (__str_body__, __str_regx__, __str_rpla__,
       else
         __last_0_width_pos__ = nil
       end
-      
+
       __replacement__ = begin
                           __interpolate_fn__.call(m[0]).to_s
                         rescue Exception
@@ -5050,9 +5050,9 @@ def process_replace (__str_body__, __str_regx__, __str_rpla__,
                           $stderr.print $!.message, \"\\n\"
                           exit! 1
                         end
-      
+
       escape_ruby_str_for_emacs!(__replacement__)
-      
+
       print '(('
       m.length.times {|i|
         print m.begin(i), ' '
@@ -5073,12 +5073,12 @@ def process_replace (__str_body__, __str_regx__, __str_rpla__,
                    ((__pos_start__ > __rgn_end__) ?
                     __rgn_end__ :
                     __pos_start__))
-  
+
   print \"(setq result '(\"
   print \"(\"
   __replace_fn__.call(__pos_start__, __rgn_end__, nil)
   print \")\"
-  
+
   print \"(\"
   __replace_fn__.call(__rgn_beg__,
                       __pos_wrap_end__ ? __pos_wrap_end__ : __rgn_end__,
@@ -5092,17 +5092,17 @@ def main ()
   fn_body, fn_out, fn_regx, fn_rpla,
   dot_p, case_p, ext_p, eval_p,
   limit, pt_start, rgn_beg, rgn_end  = ARGV
-  
+
   first_match_beg = nil
 
   str_body = open(fn_body, 'r:UTF-8') {|f| f.read}
   str_regx = open(fn_regx, 'r:UTF-8') {|f| f.read}
   str_rpla = open(fn_rpla, 'r:UTF-8') {|f| f.read}
-  
+
   File.umask(0177)
   $stdout = open(fn_out, 'w:UTF-8')
-  
-  process_replace(str_body, str_regx, str_rpla, 
+
+  process_replace(str_body, str_regx, str_rpla,
                   dot_p.empty?    ? nil : true,
                   case_p.empty?   ? nil : true,
                   ext_p.empty?    ? nil : true,
@@ -5111,7 +5111,7 @@ def main ()
                   pt_start.empty? ? nil : pt_start.to_i,
                   rgn_beg.empty?  ? nil : rgn_beg.to_i,
                   rgn_end.empty?  ? nil : rgn_end.to_i)
-  
+
 rescue Exception
   $stderr.print $!.message, \"\\n\"
   exit! 1
@@ -5123,7 +5123,7 @@ main()
 
 ")
 
-(defvar foreign-regexp/shell-script/foreign-regexp-replace-aux.js 
+(defvar foreign-regexp/shell-script/foreign-regexp-replace-aux.js
   (concat "#!" (cond
                 ((eq window-system 'w32)
                  "node")
@@ -5171,13 +5171,13 @@ function number_p (c) {
 function interpolate_fn_gen (str, num_capture) {
     var cur_pos = 0;
     var last_match_end = 0;
-    
+
     var rpla_lst = [];
     var pos;
-    
+
     while (-1 < (pos = str.indexOf('$', last_match_end))) {
         rpla_lst.push(quote_str_for_eval(str.substring(last_match_end, pos)));
-        
+
         var peek = str.substr(pos + 1, 1);
         var expr;
 
@@ -5216,10 +5216,10 @@ function interpolate_fn_gen (str, num_capture) {
         last_match_end = pos;
     }
     rpla_lst.push(quote_str_for_eval(str.substring(last_match_end, str.length)));
-    
+
     var arg_lst = ['_ignore_'];
     for (var i = 1; i <= num_capture; ++i) { arg_lst.push('$'+i) };
-    
+
     return eval('(function ('+arg_lst.join(',')+'){return '+rpla_lst.join('+')+'})');
 }
 
@@ -5245,7 +5245,7 @@ function process_replace (str_body, str_regx, str_rpla,
     var match;
     var pos_wrap_end = null;
     var count        = 0;
-    
+
     var regx = RegExp(str_regx,
                       \"gm\" +
                       (dot_p  ? \"\" : \"\")  + /* Not supported. Dot
@@ -5259,12 +5259,12 @@ function process_replace (str_body, str_regx, str_rpla,
     var replace_fn = function (rgn_beg, rgn_end, wrap_p) {
         var cur_pos = rgn_beg;
         last_0_width_pos = null;
-        
+
         if (interpolate_fn == null) {
             regx.lastIndex = 0;
             if (match = regx.exec(str_body)) {
                 num_capture = match.length - 1;
-                
+
                 try {
                     interpolate_fn = (eval_p
                                       ? eval_fn_gen(str_rpla)
@@ -5275,7 +5275,7 @@ function process_replace (str_body, str_regx, str_rpla,
             }
         }
 
-    
+
         while (((limit == null) ? true : (count < limit))
                && ((regx.lastIndex = cur_pos) ? true : true)
                && (match = regx.exec(str_body))) {
@@ -5284,25 +5284,25 @@ function process_replace (str_body, str_regx, str_rpla,
 
             var num_capture = match.length - 1;
             var offset = 0;
-            
+
             var match_beg = lmi[offset + 0];
             var match_end = lmi[offset + 1];
             var _0_width_p = (match_beg == match_end);
-            
+
             if (match_end > rgn_end) { break };
             if (wrap_p && (pos_wrap_end != null) && (pos_wrap_end <= match_beg)) { break };
             if ((! wrap_p) && (pos_wrap_end == null))  { pos_wrap_end = match_beg };
-            
+
             if (_0_width_p && (last_0_width_pos != null) && (match_beg == last_0_width_pos))
             {
                 // Do not enter into endless loop.
                 cur_pos += 1;
                 if (cur_pos > rgn_end)  { break };
                 continue;
-                
+
             }  else if (_0_width_p) {
                 last_0_width_pos = match_beg;
-                
+
             } else {
                 last_0_width_pos = null;
             }
@@ -5313,14 +5313,14 @@ function process_replace (str_body, str_regx, str_rpla,
                 throw {message: 'Error while interpolating replacement \"'+str_rpla+'\":\\n'+e.message};
             }
             replacement = escape_js_str_for_emacs(replacement);
-            
+
             write(fn_out, \"((\");
-            
+
             for (var i = 0; i <= num_capture; ++i) {
                 var idx = i*2 + offset;
                 var sub_match_beg = lmi[idx];
                 var sub_match_end = lmi[idx+1];
-                
+
                 if ((-1 < sub_match_beg) && (-1 < sub_match_end)) { // XXX: What this means?
                     write(fn_out, sub_match_beg + \" \" + sub_match_end + \" \")
                 }
@@ -5328,12 +5328,12 @@ function process_replace (str_body, str_regx, str_rpla,
             write(fn_out, \")\");
             write(fn_out, '\"'+replacement+'\"');
             write(fn_out, \")\");
-            
+
             cur_pos = match_end;
             ++count;
         }
     }
-     
+
     rgn_beg   = (rgn_beg == null) ? 0: rgn_beg;
     rgn_end   = (rgn_end == null) ? str_body.length : rgn_end;
     pos_start = ((pos_start < rgn_beg)
@@ -5341,7 +5341,7 @@ function process_replace (str_body, str_regx, str_rpla,
                  : ((rgn_end < pos_start)
                     ? rgn_end
                     : pos_start));
-    
+
     write(fn_out, \"(setq result '(\")
     write(fn_out, \"(\");
     replace_fn(pos_start, rgn_end, false);
@@ -5350,7 +5350,7 @@ function process_replace (str_body, str_regx, str_rpla,
     write(fn_out, \"(\");
     replace_fn(rgn_beg, (pos_wrap_end == null) ? rgn_end : pos_wrap_end, true);
     write(fn_out, \")\");
-    
+
     write(fn_out, \"))\\n\")
 }
 
@@ -5367,12 +5367,12 @@ function main (argv) {
     var pos_start = argv[11].length ? parseInt(argv[11]) : null;
     var rgn_beg   = argv[12].length ? parseInt(argv[12]) : null;
     var rgn_end   = argv[13].length ? parseInt(argv[13]) : null;
-    
+
     var str_body = FS.readFileSync(fn_body,  ENCODING);
     var str_regx = FS.readFileSync(fn_regx, ENCODING);
     var str_rpla = FS.readFileSync(fn_rpla,  ENCODING);
-    
-    process_replace(str_body, str_regx, str_rpla, 
+
+    process_replace(str_body, str_regx, str_rpla,
                     dot_p, case_p, ext_p, eval_p,
                     limit, pos_start, rgn_beg, rgn_end,
                     fn_out);
@@ -5400,10 +5400,10 @@ import sys, re, codecs
 def interpolate_fn_gn (txt):
     env = {}
     txt = escape_str_for_interpolate_fn_gen(txt)
-    
+
     m_lambda = re.match(r'^lambda', txt)
     m_def = re.search(r'^def\\s+([^\\s]+)\\s*\\(', txt, re.MULTILINE)
-    
+
     if (m_lambda):
         txt = \"interpolate_fn = \" + txt
     elif (m_def):
@@ -5411,14 +5411,14 @@ def interpolate_fn_gn (txt):
     else:
         sys.stderr.write('Replacement is not type of lambda or def.')
         exit(1)
-    
+
     try:
         exec(txt, {}, env)
     except Exception as e:
         sys.stderr.write(\"Error in replacement string: \")
         sys.stderr.write(str(e))
         exit(1)
-    
+
     return env['interpolate_fn']
 
 
@@ -5439,42 +5439,42 @@ count_match = 0
 def do_replace (f, str_body, regx, str_rpla, interpolate_fn, limit, rgn_beg, rgn_end, wrap_p):
     global pos_wrap_end
     global count_match
-    
+
     for match in regx.finditer(str_body, rgn_beg):
         if (limit != None) and (limit <= count_match):
             break
-        
+
         if match.end() > rgn_end:
             break
-        
+
         if wrap_p and (pos_wrap_end != None) and (pos_wrap_end <= match.start()):
             break
-        
+
         if (not wrap_p) and (pos_wrap_end == None):
             pos_wrap_end = match.start()
-        
+
         f.write(\"((\")
         f.write(\"%d %d \" % match.span())
         for i in range(len(match.groups())):
             if (match.groups())[i] != None: # Skip unmatched group.
                 f.write(\"%d %d \" % match.span(i+1))
         f.write(\")\\\"\")
-        
+
         try:
             rpla_expanded = (interpolate_fn and
                              [interpolate_fn(match)] or
                              [match.expand(str_rpla)])[0]
             if not (isinstance(rpla_expanded, unicode) or isinstance(rpla_expanded, str)):
                 rpla_expanded = str(rpla_expanded)
-            
+
             f.write(escape_python_str_for_emacs(rpla_expanded))
         except Exception as e:
             sys.stderr.write(\"Error while interpolating replacement: \")
             sys.stderr.write(str(e))
             exit(1)
-        
+
         f.write(\"\\\")\")
-        
+
         count_match += 1
 
 
@@ -5482,19 +5482,19 @@ def main ():
     [prog, fn_body, fn_out, fn_regx, fn_rpla,
      dot_p, case_p, ext_p, eval_p,
      limit, pos_start, rgn_beg, rgn_end] = sys.argv
-    
+
     limit     = (len(limit)     and [int(limit)]     or [None])[0]
     pos_start = (len(pos_start) and [int(pos_start)] or [None])[0]
     rgn_beg   = (len(rgn_beg)   and [int(rgn_beg)]   or [None])[0]
     rgn_end   = (len(rgn_end)   and [int(rgn_end)]   or [None])[0]
-    
+
     str_body = codecs.open(fn_body, 'r', 'utf_8').read()
     str_regx = codecs.open(fn_regx, 'r', 'utf_8').read()
     str_rpla = (fn_rpla and [codecs.open(fn_rpla, 'r', 'utf_8').read()] or [\"\"])[0]
-    
+
     f = codecs.open(fn_out, 'w', 'utf8')
-    
-    
+
+
     try:
         regx = re.compile(str_regx, ((dot_p        and re.DOTALL     or 0) |
                                      ((not case_p) and re.IGNORECASE or 0) |
@@ -5504,9 +5504,9 @@ def main ():
         sys.stderr.write(\"Error while compiling regexp: \")
         sys.stderr.write(str(e))
         exit(1)
-        
+
     interpolate_fn = (eval_p and [interpolate_fn_gn(str_rpla)] or [None])[0];
-    
+
     rgn_beg   = rgn_beg or 0
     rgn_end   = rgn_end or len(str_body)
     pos_start = ((pos_start < rgn_beg) and
@@ -5514,21 +5514,21 @@ def main ():
                  [((pos_start > rgn_end) and
                    [rgn_end] or
                    [pos_start])[0]])[0]
-    
+
     f.write(\"(setq result '((\")
-    
+
     do_replace(f, str_body, regx, str_rpla, interpolate_fn, limit, pos_start, rgn_end, False)
-    
+
     f.write(\")(\")
-    
+
     do_replace(f, str_body, regx, str_rpla, interpolate_fn, limit, rgn_beg,
                ((pos_wrap_end != None) and
                 [pos_wrap_end] or
                 [rgn_end])[0],
                True)
-    
+
     f.write(\")))\\n;;; EOF\\n\")
-    
+
     exit
 
 main()
